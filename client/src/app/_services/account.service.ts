@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ReplaySubject } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 import { User } from '../_models/user';
 
 @Injectable({
@@ -9,16 +10,20 @@ import { User } from '../_models/user';
 })
 export class AccountService {
 
-  baseUrl = 'https://localhost:5001/api/';
+  baseUrl = environment.apiUrl;
 
   private currentUserSource = new ReplaySubject<User>(1);
   currentUser$ = this.currentUserSource.asObservable();
 
-  constructor(private http: HttpClient) { }
+  constructor(private httpClient: HttpClient) {
+    if (httpClient == null) {
+      throw Error('httpClient is null or undefined');
+    }
+  }
 
   // tslint:disable-next-line: typedef
   login(model: any) {
-    return this.http.post(this.baseUrl + 'account/login', model).pipe(
+    return this.httpClient.post(this.baseUrl + 'account/login', model).pipe(
       map((response: any) => {
         const user = response;
         if (user) {
@@ -31,7 +36,7 @@ export class AccountService {
 
   // tslint:disable-next-line: typedef
   userRegister(model: any) {
-    return this.http.post(this.baseUrl + 'account/register', model).pipe(
+    return this.httpClient.post(this.baseUrl + 'account/register', model).pipe(
       map((user: any) => {
         if (user) {
           localStorage.setItem('user', JSON.stringify(user));
