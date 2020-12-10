@@ -18,6 +18,7 @@ export class MemberListComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.loadMembers();
   }
 
   // tslint:disable-next-line: typedef
