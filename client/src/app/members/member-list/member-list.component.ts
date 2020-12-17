@@ -19,12 +19,15 @@ export class MemberListComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadMembers();
+    // tslint:disable-next-line: no-debugger
+    // debugger;
   }
 
   // tslint:disable-next-line: typedef
   loadMembers() {
-    this.memberService.getMembers().subscribe(members => {
-      this.members = members;
+    this.memberService.getMembers().subscribe(data => {
+      this.members = data;
+      // console.log(`MEMBERS LISTS:`, this.members);
     });
   }
 }

@@ -11,6 +11,7 @@ import { AccountService } from '../_services/account.service';
 export class NavComponent implements OnInit {
 
   model: any = {};
+  title = 'Dating App';
 
   constructor(public accountService: AccountService,
               private router: Router,
